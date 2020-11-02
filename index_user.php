@@ -32,7 +32,7 @@ include("auth.php");
         <ul class="nav navbar-nav navbar-right">
         <li><a href="logout.php">logout</a></li>
         <li class="active"><a href="index_user.php">users <span class="sr-only">(current)</span></a></li>
-        <li><a href="index_zone.php">zones</a></li>
+        <li><a href="index_accounts.php">zones</a></li>
         <li><a href="index.php">records</a></li>
     </div>
  </div>
@@ -43,8 +43,10 @@ include("auth.php");
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 				{{successMessage}}
 			</div>
-<!--			<div align="right"> -->
-<!--				<button type="button" name="add_button" ng-click="addData()" class="btn btn-success">Add User</button> -->
+<!--			<div align="right">
+ -->
+<!--				<button type="button" name="add_button" ng-click="addData()" class="btn btn-success">Add User</button>
+ -->
 
 			<div align="right" style="float: right; z-index: 999; position: relative;">
 				<button type="button" name="add_button" ng-click="addData()" class="btn btn-success">Add User</button>

@@ -3,7 +3,7 @@
 //fetch_data.php
 
 include('database_connection.php');
-$query = "SELECT * FROM zones ORDER BY id";
+$query = "SELECT * FROM accounts ORDER BY id";
 
 $statement = $connect->prepare($query);
 if($statement->execute())

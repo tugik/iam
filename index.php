@@ -32,7 +32,7 @@ include("auth.php");
       <ul class="nav navbar-nav navbar-right">
         <li><a href="logout.php"> logout </a></li>
         <li><a href="index_user.php"> users </a></li>
-        <li><a href="index_zone.php"> zones </a></li>
+        <li><a href="index_accounts.php"> zones </a></li>
         <li class="active"><a href="index.php"> records <span class="sr-only">(current)</span></a></li>
 
     </div>
@@ -42,7 +42,8 @@ include("auth.php");
 		<div class="container" ng-init="fetchData()">
 			<br />
 			<br />
-<!--				<h3 align="center">IPtrulesDB</h3> -->
+<!--				<h3 align="center">IPtrulesDB</h3>
+ -->
 			<br />
 			<div class="alert alert-success alert-dismissible" ng-show="success" >
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
