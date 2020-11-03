@@ -10,19 +10,17 @@ $form_data = json_decode(file_get_contents("php://input"));
 
 $data = array(
     'account_id'    => $form_data->account_id,
-    'proto'  => $form_data->proto,
     'dst_ip'  => $form_data->dst_ip,
-    'dst_port'  => $form_data->dst_port,
+    'dst_mask'  => $form_data->dst_mask,
     'descr'  => $form_data->descr,
     'state'  => $form_data->state,
-    //'change_by'	=>	$change_by
     'change_by' => $_SESSION["username"]
 );
 
 $query = "
- INSERT INTO accesslist
- (account_id, proto, dst_ip, dst_port, descr, state, change_by) VALUES
- (:account_id, :proto, :dst_ip, :dst_port, :descr, :state, :change_by)
+ INSERT INTO routes
+ (account_id, dst_ip, dst_mask, descr, state, change_by) VALUES
+ (:account_id, :dst_ip, :dst_mask, :descr, :state, :change_by)
 ";
 
 
@@ -31,7 +29,7 @@ $statement = $connect->prepare($query);
 
 if($statement->execute($data))
 {
-    $message = 'Access rule Inserted';
+    $message = 'Route Inserted';
 }
 
 $output = array(

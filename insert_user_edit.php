@@ -3,7 +3,7 @@
 //insert.php
 
 include("auth.php");
-include('database_connection.php');
+include('./db/database_connection.php');
 
 
 $form_data = json_decode(file_get_contents("php://input"));

@@ -12,7 +12,7 @@ login page
 </head>
 <body>
 <?php
-	require('db.php');
+	require('./db/db.php');
 	session_start();
     // If form submitted, insert values into the database.
     if (isset($_POST['username'])){
@@ -29,7 +29,7 @@ login page
 		$rows = mysqli_num_rows($result);
         if($rows==1){
 			$_SESSION['username'] = $username;
-			header("Location: index.php"); // Redirect user to index.php
+			header("Location: index_accounts.php"); // Redirect user to index.php
             }else{
 				echo "<div class='form'><h3>Username/password is incorrect or disable.</h3><br/>Click here to <a href='login.php'>Login</a></div>";
 				}
@@ -42,7 +42,7 @@ login page
 <input type="password" name="password" placeholder="Password" required />
 <input name="submit" type="submit" value="Login" />
 </form>
-<!-- <p>Develope for <a href='https://dnsdb'> dnsdb</a></p> -->
+<!-- <p>Develope for <a href='https://iam'> iam</a></p> -->
 </div>
 <?php } ?>
 

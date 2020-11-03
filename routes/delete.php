@@ -13,7 +13,7 @@ $query = "DELETE FROM accesslist WHERE id = '".$form_data->id."'";
 $statement = $connect->prepare($query);
 if($statement->execute())
 {
-    $message = 'Access rule Deleted';
+    $message = 'Route Deleted';
 }
 
 $output = array(

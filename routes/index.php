@@ -1,14 +1,14 @@
 
 <html>
 <head>
-    <title>Access List from ALL Accounts</title>
+    <title>Routes List from ALL Accounts</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 </head>
 <body>
 <div class="container">
     <br />
-    <h3 align="center">Access List from ALL Accounts</h3><br />
+    <h3 align="center">Routes List from ALL Accounts</h3><br />
     <div class="table-responsive" ng-app="liveApp" ng-controller="liveController" ng-init="fetchData()">
         <div class="alert alert-success alert-dismissible" ng-show="success" >
             <a href="#" class="close" data-dismiss="alert" ng-click="closeMsg()" aria-label="close">&times;</a>
@@ -18,9 +18,8 @@
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th>Protocol</th>
                     <th>Destination IP</th>
-                    <th>Destination Port</th>
+                    <th>Destination Mask</th>
                     <th>Description</th>
                     <th>Add Date</th>
                     <th>Update Date</th>
@@ -29,10 +28,9 @@
                 </tr>
                 </thead>
                 <tbody>
-<!---                <tr>
-                    <td><input type="text" ng-model="addData.proto" class="form-control" placeholder="Enter protocol" ng-required="true" /></td>
+<!--                <tr>
                     <td><input type="text" ng-model="addData.dst_ip" class="form-control" placeholder="Enter Dst IP" ng-required="true" /></td>
-                    <td><input type="text" ng-model="addData.dst_port" class="form-control" placeholder="Enter Dst Port" ng-required="true" /></td>
+                    <td><input type="text" ng-model="addData.dst_mask" class="form-control" placeholder="Enter Dst Mask" ng-required="true" /></td>
                     <td><input type="text" ng-model="addData.descr" class="form-control" placeholder="Enter Description" ng-required="true" /></td>
                     <td><input type="text" ng-model="addData.add_data" class="form-control" placeholder="auto" ng-required="true" /></td>
                     <td><input type="text" ng-model="addData.upd_date" class="form-control" placeholder="auto" ng-required="true" /></td>
@@ -42,14 +40,12 @@
 -->
                 <tr ng-repeat="data in namesData" ng-include="getTemplate(data)">
                 </tr>
-
                 </tbody>
             </table>
         </form>
         <script type="text/ng-template" id="display">
-            <td>{{data.proto}}</td>
             <td>{{data.dst_ip}}</td>
-            <td>{{data.dst_port}}</td>
+            <td>{{data.dst_mask}}</td>
             <td>{{data.descr}}</td>
             <td>{{data.add_date}}</td>
             <td>{{data.upd_date}}</td>
@@ -61,9 +57,8 @@
 -->
         </script>
         <script type="text/ng-template" id="edit">
-            <td><input type="text" ng-model="formData.proto" class="form-control"  /></td>
             <td><input type="text" ng-model="formData.dst_ip" class="form-control" /></td>
-            <td><input type="text" ng-model="formData.dst_port" class="form-control" /></td>
+            <td><input type="text" ng-model="formData.dst_mask" class="form-control" /></td>
             <td><input type="text" ng-model="formData.descr" class="form-control" /></td>
             <td><input type="text" ng-model="formData.add_date" class="form-control" /></td>
             <td><input type="text" ng-model="formData.upd_date" class="form-control" /></td>

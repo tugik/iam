@@ -4,7 +4,7 @@ include("auth.php");
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>DNSDB</title>
+		<title>IAM</title>
 		<script src="jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
 		<script src="jquery.dataTables.min.js"></script>
@@ -25,15 +25,25 @@ include("auth.php");
 <nav class="navbar navbar-default navbar-fixed-top">
  <div class="container">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">DNSDB</a>
-<!--      <img alt="IPtrulesDB" src="..."> -->
+      <a class="navbar-brand" href="#">IAM</a>
+<!--      <img alt="IAM" src="..."> -->
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
         <li><a href="logout.php">logout</a></li>
         <li class="active"><a href="index_user.php">users <span class="sr-only">(current)</span></a></li>
-        <li><a href="index_accounts.php">zones</a></li>
-        <li><a href="index.php">records</a></li>
+        <li><a href="index_accounts.php">accounts</a></li>
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">list<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="./accesslist/index.php">All Access List</a></li>
+                    <li><a href="./routes/index.php">All Routes</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="version.php">Version Info</a></li>
+                </ul>
+            </li>
+
     </div>
  </div>
 </nav>

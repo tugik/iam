@@ -1,8 +1,8 @@
 <?php
 
 //insert.php
-
-include('database_connection.php');
+include("auth.php");
+include('./db/database_connection.php');
 
 $message = '';
 

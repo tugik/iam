@@ -2,7 +2,7 @@
 
 //fetch_data.php
 
-include('database_connection.php');
+include('./db/database_connection.php');
 $query = "SELECT * FROM users ORDER BY id";
 
 $statement = $connect->prepare($query);

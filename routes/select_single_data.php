@@ -13,19 +13,17 @@ $data = [
 
 $query = <<<SQL
  SELECT 
-        accesslist.id, 
-        accesslist.account_id,
+        routes.id, 
+        routes.account_id,
         accounts.account,
-        accesslist.proto,
-        accounts.ip,
-        accesslist.dst_ip, 
-        accesslist.dst_port, 
-        accesslist.descr, 
-        accesslist.state, 
-        accesslist.add_date, 
-        accesslist.upd_date, 
-        accesslist.change_by 
-FROM accesslist JOIN accounts ON accounts.id=accesslist.account_id WHERE accesslist.account_id = :id
+        routes.dst_ip, 
+        routes.dst_mask, 
+        routes.descr, 
+        routes.state, 
+        routes.add_date, 
+        routes.upd_date, 
+        routes.change_by 
+FROM routes JOIN accounts ON accounts.id=routes.account_id WHERE routes.account_id = :id
 SQL;
 
 $statement = $connect->prepare($query);
