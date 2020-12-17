@@ -8,9 +8,9 @@ login page
 <head>
 <meta charset="utf-8">
 <title>Login</title>
-<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="style.css"   />
 </head>
-<body>
+<body style="background-color:#f5f7fa;">
 <?php
 	require('./db/db.php');
 	session_start();
@@ -36,13 +36,18 @@ login page
     }else{
 ?>
 <div class="form">
-<h1>Log In</h1>
+    <br><br><br>
+ <!--   <img alt="IAM" src="main-logo.png" width="322" height="90"> -->
+    <br>
+<h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Log In to IAM</h1>
+    <h5><p style="margin-left: 60px;">Identity and Access Management</p></h5>
 <form action="" method="post" name="login">
 <input type="text" name="username" placeholder="Username" required />
 <input type="password" name="password" placeholder="Password" required />
 <input name="submit" type="submit" value="Login" />
 </form>
-<!-- <p>Develope for <a href='https://iam'> iam</a></p> -->
+<!--    <h6><p style="margin-left: 100px;">Develope for companyname</a> 2020</p></h6>-->
+    <h6><p style="margin-left: 100px;">IT department 2020</p></h6>
 </div>
 <?php } ?>
 

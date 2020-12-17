@@ -18,9 +18,10 @@ $ip = '';
 $vlan = '';
 $server = '';
 $device = '';
-$dns = '';
-$net = '';
-$subnet = '';
+$dns1 = '';
+$dns2 = '';
+$network = '';
+$netmask = '';
 $descr = '';
 $state = '';
 $add_date = '';
@@ -43,9 +44,10 @@ if($form_data->action == 'fetch_single_data')
 		$output['vlan'] = $row['vlan'];
 		$output['server'] = $row['server'];
 		$output['device'] = $row['device'];
-		$output['dns'] = $row['dns'];
-		$output['net'] = $row['net'];
-		$output['subnet'] = $row['subnet'];
+		$output['dns1'] = $row['dns1'];
+		$output['dns2'] = $row['dns2'];
+		$output['network'] = $row['network'];
+		$output['netmask'] = $row['netmask'];
 		$output['descr'] = $row['descr'];
 		$output['state'] = $row['state'];
 		$output['add_date'] = $row['add_date'];
@@ -125,32 +127,43 @@ else
 	{
 		$device = $form_data->device;
 	}
-	if(empty($form_data->dns))
+	if(empty($form_data->dns1))
 	{
-		//$error = 'DNS is Required';
-		$dns = $form_data->dns;
+		//$error = 'DNS1 is Required';
+		$dns1 = $form_data->dns1;
 	}
 	else
 	{
-		$dns = $form_data->dns;
+		$dns1 = $form_data->dns1;
 	}
-	if(empty($form_data->net))
+	if(empty($form_data->dns2))
+	{
+		//$error = 'DNS2 is Required';
+		$dns2 = $form_data->dns2;
+	}
+	else
+	{
+		$dns2 = $form_data->dns2;
+	}
+
+
+	if(empty($form_data->network))
 	{
 		//$error = 'NET is Required';
-		$net = $form_data->net;
+		$network = $form_data->network;
 	}
 	else
 	{
-		$net = $form_data->net;
+		$network = $form_data->network;
 	}
-	if(empty($form_data->subnet))
+	if(empty($form_data->netmask))
 	{
 		//$error = 'SubNET is Required';
-		$subnet = $form_data->subnet;
+		$netmask = $form_data->netmask;
 	}
 	else
 	{
-		$subnet = $form_data->subnet;
+		$netmask = $form_data->netmask;
 	}
 	if(empty($form_data->descr))
 	{
@@ -183,17 +196,18 @@ else
 				':vlan'	=>	$vlan,
 				':server'	=>	$server,
 				':device'	=>	$device,
-				':dns'	=>	$dns,
-				':net'	=>	$net,
-				':subnet'	=>	$subnet,
+				':dns1'	=>	$dns1,
+				':dns2'	=>	$dns2,
+				':network'	=>	$network,
+				':netmask'	=>	$netmask,
 				':descr'	=>	$descr,
 				':state'	=>	$state,
 				':change_by'	=>	$change_by
 			);
 			$query = "
 			INSERT INTO accounts
-				(account, fullname, department, ip, vlan, server, device, dns, net, subnet, descr, state, change_by) VALUES 
-				(:account, :fullname, :department, :ip, :vlan, :server, :device, :dns, :net, :subnet, :descr, :state, :change_by )
+				(account, fullname, department, ip, vlan, server, device, dns1, dns2, network, netmask, descr, state, change_by) VALUES 
+				(:account, :fullname, :department, :ip, :vlan, :server, :device, :dns1, :dns2, :network, :netmask, :descr, :state, :change_by )
 			";
 			$statement = $connect->prepare($query);
 			if($statement->execute($data))
@@ -211,9 +225,10 @@ else
 				':vlan'	=>	$vlan,
 				':server'	=>	$server,
 				':device'	=>	$device,
-				':dns'	=>	$dns,
-				':net'	=>	$net,
-				':subnet'	=>	$subnet,
+				':dns1'	=>	$dns1,
+				':dns2'	=>	$dns2,
+				':network'	=>	$network,
+				':netmask'	=>	$netmask,
 				':descr'	=>	$descr,
 				':state'	=>	$state,
 				':change_by'	=>	$change_by,
@@ -221,7 +236,7 @@ else
 			);
 			$query = "
 			UPDATE accounts 
-			SET account = :account, fullname = :fullname, department = :department, ip = :ip, vlan = :vlan, server = :server, device = :device, dns = :dns, net = :net, subnet = :subnet, descr = :descr, state = :state, change_by = :change_by 
+			SET account = :account, fullname = :fullname, department = :department, ip = :ip, vlan = :vlan, server = :server, device = :device, dns1 = :dns1, dns2 = :dns2, network = :network, netmask = :netmask, descr = :descr, state = :state, change_by = :change_by 
 			WHERE id = :id
 			";
 

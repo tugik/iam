@@ -1,4 +1,10 @@
-
+<?php
+//include("../auth.php");
+session_start();
+if(!isset($_SESSION["username"])){
+    header("Location: ../login.php");
+    exit(); }
+?>
 <html>
 <head>
     <title>Routes List from ALL Accounts</title>
@@ -18,9 +24,11 @@
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                    <th>Account</th>
                     <th>Destination IP</th>
                     <th>Destination Mask</th>
                     <th>Description</th>
+                    <th>State</th>
                     <th>Add Date</th>
                     <th>Update Date</th>
                     <th>Change By</th>
@@ -44,9 +52,11 @@
             </table>
         </form>
         <script type="text/ng-template" id="display">
+            <td>{{data.account}}</td>
             <td>{{data.dst_ip}}</td>
             <td>{{data.dst_mask}}</td>
             <td>{{data.descr}}</td>
+            <td>{{data.state}}</td>
             <td>{{data.add_date}}</td>
             <td>{{data.upd_date}}</td>
             <td>{{data.change_by}}</td>
@@ -57,9 +67,11 @@
 -->
         </script>
         <script type="text/ng-template" id="edit">
+            <td><input type="text" ng-model="formData.account" class="form-control" /></td>
             <td><input type="text" ng-model="formData.dst_ip" class="form-control" /></td>
             <td><input type="text" ng-model="formData.dst_mask" class="form-control" /></td>
             <td><input type="text" ng-model="formData.descr" class="form-control" /></td>
+            <td><input type="text" ng-model="formData.state" class="form-control" /></td>
             <td><input type="text" ng-model="formData.add_date" class="form-control" /></td>
             <td><input type="text" ng-model="formData.upd_date" class="form-control" /></td>
             <td><input type="text" ng-model="formData.change_by" class="form-control" /></td>

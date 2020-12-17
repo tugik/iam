@@ -14,20 +14,22 @@ include("auth.php");
 		<link rel="stylesheet" href="datatables.bootstrap.css">
 		
 		<style>
-		.dataTables_filter { margin-top: -1em; padding-right: 10em; }
+		.dataTables_filter { margin-top: -1em; padding-right: 6.8em; }
 		.container { width: 100%; }
-		body { padding-top: 70px; }
+		body { padding-top: 60px; }
 		</style>
 	</head>
 	<body ng-app="crudApp" ng-controller="crudController">
 		
 
-<nav class="navbar navbar-default navbar-fixed-top">
- <div class="container">
+<nav class="navbar navbar-default navbar-fixed-top"  style="background-color:#f5f7fa;" >
+ <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">IAM</a>
+        <span class="icon-bar"></span>
+        <img alt="IAM" src="main-logo.png" width="170" height="50">
 <!--      <img alt="IAM" src="..."> -->
     </div>
+     <p class="navbar-text">Identity and Access Management</p>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
         <li><a href="logout.php">logout</a></li>
@@ -37,8 +39,11 @@ include("auth.php");
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">list<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="./accesslist/index.php">All Access List</a></li>
-                    <li><a href="./routes/index.php">All Routes</a></li>
+                    <li><a href="./accesslist/index_list.php">List All Access</a></li>
+                    <li><a href="./routes/index_list.php">List All Routes</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="./loaddata/index_accounts.php" target="_blank">Last accounts update</a></li>
+                    <li><a href="./loaddata/index_accesslist.php" target="_blank">Last accesslist update</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="version.php">Version Info</a></li>
                 </ul>
@@ -59,7 +64,7 @@ include("auth.php");
  -->
 
 			<div align="right" style="float: right; z-index: 999; position: relative;">
-				<button type="button" name="add_button" ng-click="addData()" class="btn btn-success">Add User</button>
+				<button type="button" name="add_button" ng-click="addData()" class="btn btn-success" style="background-color:#0BB6C1;" >Add User</button>
 			</div>
 			<br />
 
@@ -85,8 +90,8 @@ include("auth.php");
 							<td width="40%">{{name.fullname}}</td>
 							<td><span class="label" ng-class="{'label-primary': name.permission == 'administrator', 'label-info': name.permission == 'management', 'label-default': name.permission == 'user'}">{{name.permission}}</span></td>
 							<td><span class="label" ng-class="{'label-success': name.state == 'enable', 'label-default': name.state == 'disable'}">{{name.state}}</span></td>
-							<td>{{name.add_date}}</td>
-							<td>{{name.upd_date}}</td>
+							<td width="10%">{{name.add_date}}</td>
+							<td width="10%">{{name.upd_date}}</td>
 							<td>{{name.change_by}}</td>
 							<td><button type="button" ng-click="fetchPasswordData(name.id)" class="btn btn-warning btn-xs">password</button></td>
 							<td><button type="button" ng-click="fetchEditData(name.id)" class="btn btn-warning btn-xs">Edit user</button></td>

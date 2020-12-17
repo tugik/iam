@@ -16,18 +16,20 @@ include("auth.php");
 		<style>
 		.dataTables_filter { margin-top: -1em; padding-right: 10em; }
 		.container { width: 100%; }
-		body { padding-top: 70px; }
+		body { padding-top: 60px; }
 		</style>
 	</head>
-	<body data-ng-app="iamApp" data-ng-controller="iamController">
-		
+	<body data-ng-app="iamApp" data-ng-controller="iamController"  >
 
-<nav class="navbar navbar-default navbar-fixed-top">
- <div class="container">
+
+<nav class="navbar navbar-default navbar-fixed-top"  style="background-color:#f5f7fa;"  >
+ <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">IAM</a>
-<!--      <img alt="IAM" src="..."> -->
+        <span class="icon-bar"></span>
+      <img alt="IAM" src="main-logo.png" width="170" height="50">
+<!--        <a class="navbar-brand" href="#">IAM</a>-->
     </div>
+     <p class="navbar-text">Identity and Access Management</p>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
         <li><a href="logout.php">logout</a></li>
@@ -37,10 +39,13 @@ include("auth.php");
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">list<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="./accesslist/index.php">All Access List</a></li>
-                    <li><a href="./routes/index.php">All Routes</a></li>
+                    <li><a href="./accesslist/index_list.php" target="_blank">List All Access</a></li>
+                    <li><a href="./routes/index_list.php" target="_blank">List All Routes</a></li>
+<!--                    <li role="separator" class="divider"></li>-->
+<!--                    <li><a href="./loaddata/index_accounts.php" target="_blank">Show accounts update</a></li>-->
+<!--                    <li><a href="./loaddata/index_accesslist.php" target="_blank">Show accesslist update</a></li>-->
                     <li role="separator" class="divider"></li>
-                    <li><a href="version.php">Version Info</a></li>
+                    <li><a href="version.php" target="_blank">Version Info</a></li>
                 </ul>
             </li>
 
@@ -48,26 +53,39 @@ include("auth.php");
  </div>
 </nav>
 
+
+
 		<div class="container" data-ng-init="fetchData('accounts')">
 			<div class="alert alert-success alert-dismissible" data-ng-show="success" >
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 				{{successMessage}}
 			</div>
-<!--			<div align="right">
- -->
-<!--				<button type="button" name="add_button" ng-click="addData()" class="btn btn-success">Add Accounts</button>
- -->
+
+            <div align="right" style="float: left; z-index: 999; position: relative;">
+                <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Update <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-left ">
+                    <li><a ng-click="updAcc()">Update Accounts</a></li>
+                    <li><a ng-click="updAcl()">Update Accesslist</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="./loaddata/index_accounts.php" target="_blank">Last accounts update</a></li>
+                    <li><a href="./loaddata/index_accesslist.php" target="_blank">Last accesslist update</a></li>
+                </ul>
+            </div>
+
 
 			<div align="right" style="float: right; z-index: 999; position: relative;">
-				<button type="button" name="add_button" ng-click="addData()" class="btn btn-success">Create Accounts</button>
-			</div>
+                <button type="button" name="add_button" ng-click="addData()" class="btn btn-success" style="background-color:#0BB6C1;"  >Create Accounts</button>
+            </div>
 			<br />
 
-			<div class="table-responsive" style="overflow-x: unset;">
+			<td class="table-responsive" style="overflow-x: unset;">
 				<table datatable="ng" dt-options="vm.dtOptions" class="table table-bordered table-striped">
 					<thead>
 						<tr>
-						    <th>Account</th>
+                            <th>Account</th>
 						    <th>Full Name</th>
                             <th>Department</th>
 						    <th> </th>
@@ -75,25 +93,21 @@ include("auth.php");
                             <th>Vlan</th>
 						    <th>Server</th>
 						    <th>Device</th>
-
-<!--						<th>dns</th>
-							<th>net</th>
-							<th>subnet</th>
--->
 						    <th>Description</th>
 						    <th>State</th>
 						    <th>Add Date</th>
 						    <th>Update Date</th>
 						    <th>Change By</th>
-                            <th>Routes</th>
-						    <th>Access List</th>
-                            <th>Edit</th>
-						    <th>Delete</th>
+                            <th>Action</th>
+<!--                            <th>Routes</th>-->
+<!--						    <th>Access List</th>-->
+<!--                            <th>Edit</th>-->
+<!--						    <th>Delete</th>-->
 						</tr>
 					</thead>
 				<tbody>
 				<tr data-ng-repeat="name in namesData">
-				    <td><b>{{name.account}}</b></td>
+				    <td><b style="color:#4682B4;">{{name.account}}</b></td>
 				    <td>{{name.fullname}}</td>
                     <td>{{name.department}}</td>
 				    <td> </td>
@@ -101,20 +115,31 @@ include("auth.php");
 				    <td>{{name.vlan}}</td>
 				    <td>{{name.server}}</td>
 				    <td>{{name.device}}</td>
-
-<!--						<td>{{name.dns}}</td>
-							<td>{{name.net}}</td>
-							<td>{{name.subnet}}</td>
--->
                     <td>{{name.descr}}</td>
-				    <td><span class="label" ng-class="{'label-success': name.state == 'enable', 'label-default': name.state == 'disable'}">{{name.state}}</span></td>
-				    <td>{{name.add_date}}</td>
-				    <td>{{name.upd_date}}</td>
-				    <td>{{name.change_by}}</td>
-				    <td><button type="button" ng-click="fetchSingleRoutes(name.id,name.fullname)" class="btn btn-info btn-xs">Routes</button></td>
-                    <td><button type="button" ng-click="fetchSingleAccess(name.id,name.fullname)" class="btn btn-primary btn-xs">Access List</button></td>
-                    <td><button type="button" ng-click="fetchSingleData(name.id)" class="btn btn-warning btn-xs">Edit</button></td>
-				    <td><button type="button" ng-click="deleteData(name.id)" class="btn btn-danger btn-xs">Delete</button></td>
+				    <td width="4%"><span class="label" ng-class="{'label-success': name.state == 'enable', 'label-default': name.state == 'disable'}">{{name.state}}</span></td>
+				    <td width="10%">{{name.add_date}}</td>
+				    <td width="10%">{{name.upd_date}}</td>
+				    <td width="6%">{{name.change_by}}</td>
+<!--				    <td><button type="button" ng-click="fetchSingleRoutes(name.id,name.fullname)" class="btn btn-info btn-xs" >Routes</button></td>-->
+<!--                    <td><button type="button" ng-click="fetchSingleAccess(name.id,name.fullname)" class="btn btn-info btn-xs">Access List</button></td>-->
+<!--                    <td><button type="button" ng-click="fetchSingleData(name.id)" class="btn btn-info btn-xs">Edit</button></td>-->
+<!--				    <td><button type="button" ng-click="deleteData(name.id)" class="btn btn-warning btn-xs">Delete</button></td>-->
+                    <td width="5%">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-xs btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Edits <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right ">
+                            <li><a ng-click="fetchSingleData(name.id)">Edit Account</a></li>
+                            <li><a ng-click="fetchSingleAccess(name.id,name.fullname)">Edit Access</a></li>
+                            <li><a ng-click="fetchSingleRoutes(name.id,name.fullname)">Edit Routes</a></li>
+                            <li role="separator" class="divider"></li>
+<!--                            <li><a ng-click="deleteData(name.id)">Delete Account</a></li>-->
+                            <li class="disabled"><a ng-click="deleteData(name.id)">Delete Account</a></li>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
 				</table>
@@ -174,20 +199,31 @@ include("auth.php");
             </div>
             </div>
                 <div class="form-group  row">
-			<div class="col-md-4"> <label>net</label>
-			<input type="text" name="net" ng-model="net"  required class="form-control" />
+			<div class="col-md-3"> <label>network</label>
+			<input type="text" name="network" ng-model="network"  required class="form-control" />
 			</div>
-			<div class="col-md-4"> <label>subnet</label>
-			<input type="text" name="subnet" ng-model="subnet" required class="form-control" />
+			<div class="col-md-3"> <label>netmask</label>
+			<input type="text" name="netmask" ng-model="netmask" required class="form-control" />
 			</div>
-                    <div class="col-md-4"> <label>dns</label>
-                        <select type="text" name="dns" ng-model="dns" required class="form-control" >
-                            <option value="10.0.0.53,10.0.0.54" selected>10.0.0.53,10.0.0.54</option>
-                            <option value="10.0.0.53">10.0.0.53</option>
+                    <div class="col-md-3"> <label>dns1</label>
+                        <select type="text" name="dns1" ng-model="dns1" required class="form-control" >
+                            <option value="10.0.0.53" selected>10.0.0.53</option>
                             <option value="10.0.0.54">10.0.0.54</option>
                             <option value="10.14.88.53">10.14.88.53</option>
+                            <option value="8.8.8.8">8.8.8.8</option>
+                            <option value="no">no</option>
                         </select>
                     </div>
+                    <div class="col-md-3"> <label>dns2</label>
+                        <select type="text" name="dns2" ng-model="dns2" required class="form-control" >
+                            <option value="10.0.0.53" selected>10.0.0.53</option>
+                            <option value="10.0.0.54">10.0.0.54</option>
+                            <option value="10.14.88.53">10.14.88.53</option>
+                            <option value="8.8.4.4">8.8.8.8</option>
+                            <option value="no">no</option>
+                        </select>
+                    </div>
+
             </div>
                     <p>add other information</p>
 <!--
@@ -242,7 +278,7 @@ include("auth.php");
 
 
 
-                    <form name="testform" ng-submit="insertData()">
+                    <form name="testform" ng-submit="insertAclData()">
                         <table class="table table-bordered table-striped">
                             <thead>
                             <tr>
@@ -275,7 +311,7 @@ include("auth.php");
                                 <td><input type="text" ng-model="addAccessData.add_data" class="form-control" placeholder="auto" ng-required="true" readonly /></td>
                                 <td><input type="text" ng-model="addAccessData.upd_date" class="form-control" placeholder="auto" ng-required="true" readonly /></td>
                                 <td><input type="text" ng-model="addAccessData.change_by" class="form-control" placeholder="auto" ng-required="true" readonly /></td>
-                                <td><button type="submit" class="btn btn-sm btn-success " ng-disabled="testform.$invalid"> Add  IP  rule</button></td>
+                                <td><button type="submit" class="btn btn-sm btn-success " ng-disabled="testform.$invalid"  style="background-color:#0BB6C1;"  > Add  IP  rule</button></td>
                             </tr>
                             <tr ng-repeat="data in accesslistData" ng-include="getTemplate(data)">
                             </tr>
@@ -283,7 +319,7 @@ include("auth.php");
                             </tbody>
                         </table>
                     </form>
-                    <script type="text/ng-template" id="display">
+                    <script type="text/ng-template" id="displayAcl">
                         <td>{{data.proto}}</td>
                         <td>{{data.ip}}</td>
                         <td>{{data.dst_ip}}</td>
@@ -295,24 +331,24 @@ include("auth.php");
                         <td>{{data.upd_date}}</td>
                         <td>{{data.change_by}}</td>
                         <td nowrap>
-                            <button type="button" class="btn  btn-xs btn-primary btn-sm" ng-click="showEdit(data)">Edit</button>
-                            <button type="button" class="btn btn-xs btn-danger btn-sm" ng-click="deleteData(data.id)">Delete</button>
+                            <button type="button" class="btn  btn-xs btn-primary btn-sm" ng-click="showAclEdit(data)">Edit</button>
+                            <button type="button" class="btn btn-xs btn-danger btn-sm" ng-click="deleteAclData(data.id)">Delete</button>
                         </td>
                     </script>
-                    <script type="text/ng-template" id="edit">
-                        <td><select type="text" ng-model="formData.proto" class="form-control form-control-sm"><option>tcp</option><option>all</option>><option>udp</option></select></td>
-                        <td><input type="text" ng-model="formData.ip" class="form-control form-control-sm" readonly /></td>
-                        <td><input type="text" ng-model="formData.dst_ip" class="form-control form-control-sm" /></td>
-                        <td><input type="text" ng-model="formData.dst_port" class="form-control form-control-sm" /></td>
-                        <td><input type="text" ng-model="formData.descr" class="form-control form-control-sm" /></td>
-                        <td><select type="text" ng-model="formData.state" class="form-control form-control-sm" ><option>enable</option><option>disable</option></select></td>
-                        <td><input type="text" ng-model="formData.add_date" class="form-control form-control-sm" readonly /></td>
-                        <td><input type="text" ng-model="formData.upd_date" class="form-control form-control-sm" readonly /></td>
-                        <td><input type="text" ng-model="formData.change_by" class="form-control form-control-sm" readonly /></td>
+                    <script type="text/ng-template" id="editAcl">
+                        <td><select type="text" ng-model="formAclData.proto" class="form-control form-control-sm"><option>tcp</option><option>all</option>><option>udp</option></select></td>
+                        <td><input type="text" ng-model="formAclData.ip" class="form-control form-control-sm" readonly /></td>
+                        <td><input type="text" ng-model="formAclData.dst_ip" class="form-control form-control-sm" /></td>
+                        <td><input type="text" ng-model="formAclData.dst_port" class="form-control form-control-sm" /></td>
+                        <td><input type="text" ng-model="formAclData.descr" class="form-control form-control-sm" /></td>
+                        <td><select type="text" ng-model="formAclData.state" class="form-control form-control-sm" ><option>enable</option><option>disable</option></select></td>
+                        <td><input type="text" ng-model="formAclData.add_date" class="form-control form-control-sm" readonly /></td>
+                        <td><input type="text" ng-model="formAclData.upd_date" class="form-control form-control-sm" readonly /></td>
+                        <td><input type="text" ng-model="formAclData.change_by" class="form-control form-control-sm" readonly /></td>
                         <td nowrap>
-                            <input type="hidden" ng-model="formData.data.id" />
-                            <button type="button" class="btn btn-info btn-sm" ng-click="editData()">Save</button>
-                            <button type="button" class="btn btn-default btn-sm" ng-click="reset()">Cancel</button>
+                            <input type="hidden" ng-model="formAclData.data.id" />
+                            <button type="button" class="btn btn-info btn-sm" ng-click="editAclData()">Save</button>
+                            <button type="button" class="btn btn-default btn-sm" ng-click="resetAcl()">Cancel</button>
                         </td>
                     </script>
 
@@ -377,11 +413,11 @@ include("auth.php");
                                 <td><input type="text" ng-model="addRoutesData.dst_ip" class="form-control" placeholder="Enter Dst IP" ng-required="true" /></td>
                                 <td><input type="text" ng-model="addRoutesData.dst_mask" class="form-control" placeholder="Enter Dst Mask" ng-required="true" /></td>
                                 <td><input type="text" ng-model="addRoutesData.descr" class="form-control" placeholder="Enter Description" ng-required="true" /></td>
-                                <td><select type="text" ng-model="addRoutesData.state" class="form-control" ng-required="true"><option selected>enable</option><option>disable</option></select></td>
+                                <td><select type="text" ng-model="addRoutesData.state" class="form-control" ng-required="true"><option selected>enable</option><option>disable</option><option>norout</option></select></td>
                                 <td><input type="text" ng-model="addRoutesData.add_data" class="form-control" placeholder="auto" ng-required="true" readonly /></td>
                                 <td><input type="text" ng-model="addRoutesData.upd_date" class="form-control" placeholder="auto" ng-required="true" readonly /></td>
                                 <td><input type="text" ng-model="addRoutesData.change_by" class="form-control" placeholder="auto" ng-required="true" readonly /></td>
-                                <td><button type="submit" class="btn btn-sm btn-success " ng-disabled="testform.$invalid"> Add Routs</button></td>
+                                <td><button type="submit" class="btn btn-sm btn-success " ng-disabled="testform.$invalid" style="background-color:#0BB6C1;"  > Add Routs</button></td>
                             </tr>
                             <tr ng-repeat="data in routesListData" ng-include="getTemplateRoutes(data)">
                             </tr>
@@ -394,7 +430,7 @@ include("auth.php");
                         <td>{{data.dst_mask}}</td>
                         <td>{{data.descr}}</td>
                         <!--                        <td>{{data.state}}</td> -->
-                        <td><span class="label" ng-class="{'label-success': data.state == 'enable', 'label-default': data.state == 'disable'}">{{data.state}}</span></td>
+                        <td><span class="label" ng-class="{'label-success': data.state == 'enable', 'label-default': data.state == 'disable', 'label-danger': data.state == 'norout'}">{{data.state}}</span></td>
                         <td>{{data.add_date}}</td>
                         <td>{{data.upd_date}}</td>
                         <td>{{data.change_by}}</td>
@@ -407,7 +443,7 @@ include("auth.php");
                         <td><input type="text" ng-model="formRoutesData.dst_ip" class="form-control" /></td>
                         <td><input type="text" ng-model="formRoutesData.dst_mask" class="form-control" /></td>
                         <td><input type="text" ng-model="formRoutesData.descr" class="form-control" /></td>
-                        <td><select type="text" ng-model="formRoutesData.state" class="form-control" ><option>enable</option><option>disable</option></select></td>
+                        <td><select type="text" ng-model="formRoutesData.state" class="form-control" ><option>enable</option><option>disable</option><option>norout</option></select></td>
                         <td><input type="text" ng-model="formRoutesData.add_date" class="form-control" readonly /></td>
                         <td><input type="text" ng-model="formRoutesData.upd_date" class="form-control" readonly /></td>
                         <td><input type="text" ng-model="formRoutesData.change_by" class="form-control" readonly /></td>
@@ -485,9 +521,10 @@ app.controller('iamController', function($scope, $http) {
             $scope.vlan = '';
             $scope.server = '';
             $scope.device = '';
-            $scope.dns = '';
-            $scope.net = '';
-            $scope.subnet = '';
+            $scope.dns1 = '';
+            $scope.dns2 = '';
+            $scope.network = '';
+            $scope.netmask = '';
             $scope.descr = '';
             $scope.state = 'enable';
             $scope.openModal('accountmodal');
@@ -505,9 +542,10 @@ app.controller('iamController', function($scope, $http) {
                     'vlan': $scope.vlan,
                     'server': $scope.server,
                     'device': $scope.device,
-                    'dns': $scope.dns,
-                    'net': $scope.net,
-                    'subnet': $scope.subnet,
+                    'dns1': $scope.dns1,
+                    'dns2': $scope.dns2,
+                    'network': $scope.network,
+                    'netmask': $scope.netmask,
                     'descr': $scope.descr,
                     'state': $scope.state,
                     'change_by': $scope.change_by,
@@ -544,9 +582,10 @@ app.controller('iamController', function($scope, $http) {
                 $scope.vlan = data.vlan;
                 $scope.server = data.server;
                 $scope.device = data.device;
-                $scope.dns = data.dns;
-                $scope.net = data.net;
-                $scope.subnet = data.subnet;
+                $scope.dns1 = data.dns1;
+                $scope.dns2 = data.dns2;
+                $scope.network = data.network;
+                $scope.netmask = data.netmask;
                 $scope.descr = data.descr;
                 $scope.state = data.state;
                 $scope.add_date = data.add_date;
@@ -578,18 +617,18 @@ app.controller('iamController', function($scope, $http) {
 
 
 // for modal access
-    $scope.formData = {};
+    $scope.formAclData = {};
     $scope.addAccessData = {};
     $scope.success = false;
 
     $scope.getTemplate = function(data){
-        if (data.id === $scope.formData.id)
+        if (data.id === $scope.formAclData.id)
         {
-            return 'edit';
+            return 'editAcl';
         }
         else
         {
-            return 'display';
+            return 'displayAcl';
         }
     };
 
@@ -624,34 +663,34 @@ app.controller('iamController', function($scope, $http) {
         });
     };
 
-    $scope.showEdit = function(data) {
-        $scope.formData = angular.copy(data);
+    $scope.showAclEdit = function(data) {
+        $scope.formAclData = angular.copy(data);
     };
 
-    $scope.editData = function(){
+    $scope.editAclData = function(){
         $http({
             method:"POST",
             url:"/accesslist/edit.php",
-            data:$scope.formData,
+            data:$scope.formAclData,
         }).success(function(data){
             $scope.success = true;
             $scope.successMessage = data.message;
             //$scope.fetchData('accesslist');
             //$scope.fetchSingleAccess();
-            $scope.fetchSingleAccess($scope.formData.account_id);
-            $scope.formData = {};
+            $scope.fetchSingleAccess($scope.formAclData.account_id);
+            $scope.formAclData = {};
         });
     };
 
-    $scope.reset = function(){
-        $scope.formData = {};
+    $scope.resetAcl = function(){
+        $scope.formAclData = {};
     };
 
     $scope.closeMsg = function(){
         $scope.success = false;
     };
 
-    $scope.deleteData = function(id){
+    $scope.deleteAclData = function(id){
         if(confirm("Are you sure you want to remove it?"))
         {
             $http({
@@ -661,7 +700,11 @@ app.controller('iamController', function($scope, $http) {
             }).success(function(data){
                 $scope.success = true;
                 $scope.successMessage = data.message;
-                $scope.fetchData('accesslist');
+                //$scope.fetchData('accesslist');
+                //$scope.fetchSingleAccess($scope.formAclData.account_id);
+                $scope.fetchSingleAccess($scope.addAccessData.account_id);
+                $scope.formAclData = {};
+
             });
         }
     };
@@ -754,9 +797,30 @@ app.controller('iamController', function($scope, $http) {
             }).success(function(data){
                 $scope.success = true;
                 $scope.successMessage = data.message;
-                $scope.fetchRoutesData('routes');
+                //$scope.fetchRoutesData('routes');
+                //$scope.fetchSingleRoutes($scope.formRoutesData.account_id);
+                $scope.fetchSingleRoutes($scope.addRoutesData.account_id);
+                $scope.formRoutesData = {};
             });
         }
+    };
+
+
+// Update FW
+    $scope.updAcc = function(){
+        if(confirm("Accounts information will be updated until 10 minutes"))
+        $http({
+            method:"POST",
+            url:"/loaddata/update_acconts.php",
+        });
+    };
+
+    $scope.updAcl = function(){
+        if(confirm("Acesslist information will be updated until 10 minutes"))
+        $http({
+            method:"POST",
+            url:"/loaddata/update_acсesslist.php",
+        });
     };
 
 
